@@ -32,7 +32,7 @@
 					<!-- will main class to MANIFEST.MF -->
 					<archive>
 						<manifest>
-							<mainClass>webc.CNNCrawler</mainClass>
+							<mainClass>webcrawler.CNNCrawler</mainClass>
 						</manifest>
 					</archive>
 					<!-- will assembly the exploded dependencies within our uber jar -->

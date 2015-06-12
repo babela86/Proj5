@@ -2,29 +2,16 @@
 <noticias>
 	<noticia>
 		<titulo>Titulo1</titulo>
-		<url>http://www.google.pt</url>
-		<highlights>A noticia melhor do mundo</highlights>
 		<data>31/12/2015</data>
 		<autor>Luis Sousa</autor>
 		<corpo>balal aksjksn dsverg ergegerger ergegw wergerwg njm</corpo>
-		<foto_url>http://www.google.pt</foto_url>
-		<video_url>http://www.google.com</video_url>
+		<url>http://www.google.pt</url>
 	</noticia>
 	<noticia>
 		<titulo>Titulo2</titulo>
-		<url>http://www.googlse.pt</url>
-		<highlights>A noticia melhor dodded mundo</highlights>
-		<data>31/12/2015</data>
-		<autor>Luis Sousacxece</autor>
-		<corpo>balal aksjksn dsverg ergegerececger ececergegw wergerwg njm</corpo>
-		<foto_url>http://www.googlea.pt</foto_url>
-		<video_url>http://www.googlea.com</video_url>
+		<data>31/12/2014</data>
+		<autor>Luis Sousas</autor>
+		<corpo>balal aksjksdedsn dsverg ergegerger ergegw wergerwg njm</corpo>
+		<url>http://www.google.com</url>
 	</noticia>
-
-
-
-
-
-
-
 </noticias>
