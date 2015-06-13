@@ -24,8 +24,8 @@ public class Crawler {
 		Document paginaPrincipal = null;	
 		Document paginaInterior = null;
 		Element link = null;
-
-		Noticias noticias = null;
+		
+		Noticias noticias = new Noticias();
 		Noticia noticia = null;
 
 		final String urlGeral = "http://edition.cnn.com";
@@ -56,7 +56,7 @@ public class Crawler {
 					|| link.attr("href").contains("/us/")
 					|| link.attr("href").contains("/china/")
 
-					|| link.attr("href").contains("/world/")
+					|| link.attr("href").contains("/world/")//RETIRAR ??
 
 					|| link.attr("href").contains("/europe/")
 					|| link.attr("href").contains("/middleeast/")
@@ -79,7 +79,6 @@ public class Crawler {
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
-			noticias = new Noticias();
 			urlPagina = urlGeral + urlAlvo;
 			corpo = paginaInterior.getElementsByClass("zn-body__paragraph").text();
 			for(Element meta : paginaInterior.select("meta")) {
@@ -106,7 +105,7 @@ public class Crawler {
 					imagem = value;
 					break;	
 				case "url":
-					if (value.contains(".cnn")) {
+					if (value.endsWith(".cnn")) {
 						video = value;
 						cont3++;//RETIRAR
 					}
@@ -121,7 +120,7 @@ public class Crawler {
 			noticia.setAutor(autor);
 			noticia.setCorpo(corpo);
 			noticia.setImagem(imagem);
-			noticia.setVideo(video);
+			noticia.setVideo(video);//ÀS VEZES FALHA
 			cont2++;//RETIRAR
 			noticias.getNoticia().add(noticia);
 			for (Noticia n:noticias.getNoticia()) {//RETIRAR
@@ -133,8 +132,7 @@ public class Crawler {
 		System.out.println(cont3);//RETIRAR
 		new JAXBHandler();
 		try {
-			System.out.println(noticias.getNoticia().size());//RETIRAR
-			JAXBHandler.marshal(new Noticias().getNoticia(), new File ("C:\\textexml\\teste.xml"));
+			JAXBHandler.marshal(noticias, new File ("C:\\textexml\\teste.xml"));
 			System.out.println("Marshall ok");//RETIRAR
 		} catch (IOException | JAXBException e) {
 			System.out.println(e.getMessage());

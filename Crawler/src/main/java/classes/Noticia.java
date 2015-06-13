@@ -71,10 +71,10 @@ public class Noticia {
     protected String urlPagina;
     @XmlElement(required = true)
     protected String descricao;
-    @XmlElement(required = true)
+    @XmlElement(required = true, nillable=true)
     @XmlSchemaType(name = "anyURI")
     protected String imagem;
-    @XmlElement(required = true)
+    @XmlElement(required = true, nillable=true)
     @XmlSchemaType(name = "anyURI")
     protected String video;
     @XmlElement(required = true)
