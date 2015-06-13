@@ -19,7 +19,7 @@ public class Crawler {
 
 	public static void main(String[] args) {
 
-		int cont1=0,cont2=0;
+		int cont1=0,cont2=0, cont3=0;//RETIRAR
 
 		Document paginaPrincipal = null;	
 		Document paginaInterior = null;
@@ -31,10 +31,10 @@ public class Crawler {
 		final String urlGeral = "http://edition.cnn.com";
 
 		String urlPagina = null;
-		String regiao = null;
+		String categoria = null;
 		String data = null;
 		String autor = null;
-		String cabecalho = null;
+		String titulo = null;
 		String descricao = null;
 		String corpo = null;
 		String imagem = null;
@@ -55,6 +55,9 @@ public class Crawler {
 			if ((link.attr("href").contains("/asia/")
 					|| link.attr("href").contains("/us/")
 					|| link.attr("href").contains("/china/")
+
+					|| link.attr("href").contains("/world/")
+
 					|| link.attr("href").contains("/europe/")
 					|| link.attr("href").contains("/middleeast/")
 					|| link.attr("href").contains("/africa/") || link.attr(
@@ -63,8 +66,8 @@ public class Crawler {
 				url = link.attr("href");
 				if (!urlsAlvo.contains(url)) {
 					urlsAlvo.add(url);
-					System.out.println(url);
-					cont1++;
+					System.out.println(url); //RETIRAR
+					cont1++;  //RETIRAR
 				}
 			}
 		}
@@ -74,17 +77,18 @@ public class Crawler {
 			try {
 				paginaInterior = Jsoup.connect(urlGeral + urlAlvo).get();
 			} catch (IOException e) {
-				e.getMessage();
+				System.out.println(e.getMessage());
 			}
 			noticias = new Noticias();
 			urlPagina = urlGeral + urlAlvo;
+			corpo = paginaInterior.getElementsByClass("zn-body__paragraph").text();
 			for(Element meta : paginaInterior.select("meta")) {
 				String key = meta.attr("itemprop");
 				String value = meta.attr("content");
 				noticia = new Noticia();
 				switch (key) {
 				case "articleSection":
-					regiao = value;
+					categoria = value;
 					break;	
 				case "dateModified":
 					data= value;
@@ -93,7 +97,7 @@ public class Crawler {
 					autor = value;
 					break;	
 				case "headline":
-					cabecalho = value;
+					titulo = value;
 					break;
 				case "description":
 					descricao = value;
@@ -102,30 +106,38 @@ public class Crawler {
 					imagem = value;
 					break;	
 				case "url":
-					video = value;
+					if (value.contains(".cnn")) {
+						video = value;
+						cont3++;//RETIRAR
+					}
 					break;	
 				}
 			}
-			noticia.setUrl(urlPagina);
-			noticia.setTitulo(cabecalho);
+			noticia.setCategoria(categoria);
+			noticia.setDescricao(descricao);
+			noticia.setUrlPagina(urlPagina);
+			noticia.setTitulo(titulo);
 			noticia.setData(data);
 			noticia.setAutor(autor);
-			noticia.setCorpo(paginaInterior.getElementsByClass("zn-body__paragraph").text());
-			cont2++;
+			noticia.setCorpo(corpo);
+			noticia.setImagem(imagem);
+			noticia.setVideo(video);
+			cont2++;//RETIRAR
 			noticias.getNoticia().add(noticia);
-			for (Noticia n:noticias.getNoticia()) {
-				System.out.println(n.toString());
-			}
+			for (Noticia n:noticias.getNoticia()) {//RETIRAR
+				System.out.println(n.toString());//RETIRAR
+			}//RETIRAR
 		}
-		System.out.println("Total links -> " + cont1);
-		System.out.println("Total noticias -> " + cont2);
+		System.out.println("Total links -> " + cont1);//RETIRAR
+		System.out.println("Total noticias -> " + cont2);//RETIRAR
+		System.out.println(cont3);//RETIRAR
 		new JAXBHandler();
 		try {
-			System.out.println(noticias.getNoticia().size());
+			System.out.println(noticias.getNoticia().size());//RETIRAR
 			JAXBHandler.marshal(new Noticias().getNoticia(), new File ("C:\\textexml\\teste.xml"));
-			System.out.println("Marshall ok");
+			System.out.println("Marshall ok");//RETIRAR
 		} catch (IOException | JAXBException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}	
-	}
+	}	
 }
