@@ -32,7 +32,7 @@ public class Sender {
 
 		ConnectionFactory cf = (ConnectionFactory) ic
 				.lookup("jms/RemoteConnectionFactory");
-		Topic topic = (Topic) ic.lookup("jms/queue/PlayQueue");
+		Topic topic = (Topic) ic.lookup("jms/topic/test");
 		Connection jmsConnection = cf.createConnection("user", "123");
 		Session session = jmsConnection.createSession(false,
 				Session.AUTO_ACKNOWLEDGE);
