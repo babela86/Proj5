@@ -1,4 +1,4 @@
-package webc;
+package auxiliar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,8 +13,6 @@ import javax.xml.transform.stream.StreamResult;
 
 public class XMLtoString {
 
-	// classe que retorna o ficheiro xml convertido para uma string para poder
-	// ser enviado
 	public static String convertXMLFileToString(String fileName) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

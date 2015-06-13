@@ -15,35 +15,42 @@ import org.jsoup.select.Elements;
 
 import classes.Noticia;
 import classes.Noticias;
+
 public class Crawler {
 
-	public static void main(String[] args) {
+	private int cont1=0,cont2=0;//RETIRAR
 
-		int cont1=0,cont2=0, cont3=0;//RETIRAR
+	private Document paginaPrincipal = null;	
+	private Document paginaInterior = null;
+	private Element link = null;
 
-		Document paginaPrincipal = null;	
-		Document paginaInterior = null;
-		Element link = null;
-		
-		Noticias noticias = new Noticias();
-		Noticia noticia = null;
+	private Noticias noticias = new Noticias();
+	private Noticia noticia = null;
 
-		final String urlGeral = "http://edition.cnn.com";
+	private final String urlGeral = "http://edition.cnn.com";
+	private final String ficheiroOutput = "newsOutput.xml";
 
-		String urlPagina = null;
-		String categoria = null;
-		String data = null;
-		String autor = null;
-		String titulo = null;
-		String descricao = null;
-		String corpo = null;
-		String imagem = null;
-		String video = null;
+	private String urlPagina = null;
+	private String categoria = null;
+	private String data = null;
+	private String autor = null;
+	private String titulo = null;
+	private String descricao = null;
+	private String corpo = null;
+	private String imagem = null;
+	private String video = null;
 
-		ArrayList<String> urlsAlvo = new ArrayList<String>();
-		String url = "";
+	private ArrayList<String> urlsAlvo = new ArrayList<String>();
+	private String url = "";
 
-		//descobre LINKS
+	public String executaCrawler() {
+		descobreLinks();
+		pesquisaPaginas();
+		marshallNoticia();
+		return ficheiroOutput;
+	}
+
+	private void descobreLinks() {
 		try {
 			paginaPrincipal = Jsoup.connect(urlGeral).get();
 		} catch (IOException e) {
@@ -66,13 +73,13 @@ public class Crawler {
 				url = link.attr("href");
 				if (!urlsAlvo.contains(url)) {
 					urlsAlvo.add(url);
-					System.out.println(url); //RETIRAR
 					cont1++;  //RETIRAR
 				}
 			}
 		}
+	}
 
-		//percorre LINKS
+	private void pesquisaPaginas() {
 		for (String urlAlvo : urlsAlvo) {
 			try {
 				paginaInterior = Jsoup.connect(urlGeral + urlAlvo).get();
@@ -107,35 +114,38 @@ public class Crawler {
 				case "url":
 					if (value.endsWith(".cnn")) {
 						video = value;
-						cont3++;//RETIRAR
 					}
 					break;	
 				}
 			}
-			noticia.setCategoria(categoria);
-			noticia.setDescricao(descricao);
-			noticia.setUrlPagina(urlPagina);
-			noticia.setTitulo(titulo);
-			noticia.setData(data);
-			noticia.setAutor(autor);
-			noticia.setCorpo(corpo);
-			noticia.setImagem(imagem);
-			noticia.setVideo(video);//ÀS VEZES FALHA
-			cont2++;//RETIRAR
-			noticias.getNoticia().add(noticia);
-			for (Noticia n:noticias.getNoticia()) {//RETIRAR
-				System.out.println(n.toString());//RETIRAR
-			}//RETIRAR
+			constroiNoticia();
 		}
+	}
+
+	private void constroiNoticia() {
+		noticia.setCategoria(categoria);
+		noticia.setDescricao(descricao);
+		noticia.setUrlPagina(urlPagina);
+		noticia.setTitulo(titulo);
+		noticia.setData(data);
+		noticia.setAutor(autor);
+		noticia.setCorpo(corpo);
+		noticia.setImagem(imagem);
+		noticia.setVideo(video);//ÀS VEZES FALHA
+		noticias.getNoticia().add(noticia);
+	}
+		
+	private void marshallNoticia() {
 		System.out.println("Total links -> " + cont1);//RETIRAR
 		System.out.println("Total noticias -> " + cont2);//RETIRAR
-		System.out.println(cont3);//RETIRAR
 		new JAXBHandler();
 		try {
-			JAXBHandler.marshal(noticias, new File ("newsOutput.xml"));
-			System.out.println("Marshall ok");//RETIRAR
+			JAXBHandler.marshal(noticias, new File (ficheiroOutput));
 		} catch (IOException | JAXBException e) {
 			System.out.println(e.getMessage());
 		}	
-	}	
+	}
+		
+
+
 }
