@@ -17,7 +17,7 @@ import classes.Noticias;
 public class JAXBHandler {
 
 	// Export
-	public static void marshal(List<Noticia> news, File selectedFile)
+	public static void marshal(Noticias news, File selectedFile)
 			throws IOException, JAXBException {
 		JAXBContext context;
 		BufferedWriter writer = null;
@@ -27,7 +27,7 @@ public class JAXBHandler {
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		m.setProperty("com.sun.xml.internal.bind.xmlHeaders",
 				"<?xml-stylesheet type=\"text/xsl\" href=\"styleNews.xsl\" ?>\n");
-		m.marshal(new Noticias(), writer);
+		m.marshal(news, writer);
 		writer.close();
 	}
 
