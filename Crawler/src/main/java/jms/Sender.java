@@ -21,24 +21,19 @@ public class Sender {
 		String ficheirocriadonoiniciodaclasse = null;
 
 		Properties propriedades = new Properties();
-		propriedades.setProperty("java.naming.factory.initial",
-				"org.jboss.naming.remote.client.InitialContextFactory");
-		propriedades.setProperty("java.naming.provider.url",
-				"http-remoting://127.0.0.1:9001");
-		propriedades.setProperty("java.naming.security.principal", "user");
-		propriedades.setProperty("java.naming.security.credentials", "123");
+		propriedades.setProperty("java.naming.factory.initial",	"org.jboss.naming.remote.client.InitialContextFactory");
+		propriedades.setProperty("java.naming.provider.url", "http-remoting://127.0.0.1:9001");
+		//propriedades.setProperty("java.naming.security.principal", "joao");
+		//propriedades.setProperty("java.naming.security.credentials", "123");
 
 		InitialContext ic = new InitialContext(propriedades);
 
-		ConnectionFactory cf = (ConnectionFactory) ic
-				.lookup("jms/RemoteConnectionFactory");
+		ConnectionFactory cf = (ConnectionFactory) ic.lookup("jms/RemoteConnectionFactory");
 		Topic topic = (Topic) ic.lookup("jms/queue/PlayQueue");
-		Connection jmsConnection = cf.createConnection("user", "123");
-		Session session = jmsConnection.createSession(false,
-				Session.AUTO_ACKNOWLEDGE);
+		Connection jmsConnection = cf.createConnection("joao", "br1o+sa*");
+		Session session = jmsConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		MessageProducer sender = session.createProducer(topic);
-		TextMessage mensagemEnviar = session
-				.createTextMessage(ficheirocriadonoiniciodaclasse);
+		TextMessage mensagemEnviar = session.createTextMessage(ficheirocriadonoiniciodaclasse);
 		sender.send(mensagemEnviar);
 		System.out.println("Mensagem Enviada!");
 		sender.close();

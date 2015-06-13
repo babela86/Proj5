@@ -17,14 +17,11 @@ public class XMLtoString {
 	// ser enviado
 	public static String convertXMLFileToString(String fileName) {
 		try {
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
-					.newInstance();
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			InputStream inputStream = new FileInputStream(new File(fileName));
-			org.w3c.dom.Document doc = documentBuilderFactory
-					.newDocumentBuilder().parse(inputStream);
+			org.w3c.dom.Document doc = documentBuilderFactory.newDocumentBuilder().parse(inputStream);
 			StringWriter stw = new StringWriter();
-			Transformer serializer = TransformerFactory.newInstance()
-					.newTransformer();
+			Transformer serializer = TransformerFactory.newInstance().newTransformer();
 			serializer.transform(new DOMSource(doc), new StreamResult(stw));
 			return stw.toString();
 		} catch (Exception e) {
@@ -32,5 +29,4 @@ public class XMLtoString {
 		}
 		return null;
 	}
-
 }
