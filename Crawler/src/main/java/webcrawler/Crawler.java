@@ -132,7 +132,7 @@ public class Crawler {
 		System.out.println(cont3);//RETIRAR
 		new JAXBHandler();
 		try {
-			JAXBHandler.marshal(noticias, new File ("C:\\textexml\\teste.xml"));
+			JAXBHandler.marshal(noticias, new File ("newsOutput.xml"));
 			System.out.println("Marshall ok");//RETIRAR
 		} catch (IOException | JAXBException e) {
 			System.out.println(e.getMessage());
