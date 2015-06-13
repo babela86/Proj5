@@ -22,6 +22,8 @@ public class JAXBHandler {
         writer = new BufferedWriter(new FileWriter(selectedFile));
         context = JAXBContext.newInstance(Noticias.class);
         Marshaller m = context.createMarshaller();
+        m.setProperty(Marshaller.JAXB_ENCODING, "US-ASCII");
+        m.setProperty("com.sun.xml.internal.bind.xmlHeaders", "<?xml-stylesheet type=\"text/xsl\" href=\"noticia.xsl\"?>\n\n");
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         m.marshal(news, writer);
         writer.close();
