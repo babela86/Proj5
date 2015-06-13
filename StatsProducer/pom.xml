@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pt.uc.dei.aor.paj.proj5</groupId>
-	<artifactId>webcrawler</artifactId>
+	<artifactId>statsProducer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>testeWC</description>
+	<description>testeStats</description>
 	<build>
 		<plugins>
 			<plugin>
@@ -32,7 +32,7 @@
 					<!-- will main class to MANIFEST.MF -->
 					<archive>
 						<manifest>
-							<mainClass>webcrawler.CNNCrawler</mainClass>
+							<mainClass>qqcoisa</mainClass>
 						</manifest>
 					</archive>
 					<!-- will assembly the exploded dependencies within our uber jar -->
