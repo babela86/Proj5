@@ -14,16 +14,19 @@
 		<table border="1">
 			<tr>
 				<td>
-					<p sytle="color:blue;font-size:30px;font-style:bolder;">Title</p>
+					<p sytle="color:blue;font-size:30px;font-style:bolder;">Título</p>
 				</td>
 				<td>
 					<p sytle="color:blue;font-size:30px;font-style:bolder;">Data</p>
 				</td>
 				<td>
-					<p sytle="color:blue;font-size:30px;font-style:bolder;">Author</p>
+					<p sytle="color:blue;font-size:30px;font-style:bolder;">Autor</p>
 				</td>
 				<td>
-					<p sytle="color:blue;font-size:30px;font-style:bolder;">Body</p>
+					<p sytle="color:blue;font-size:30px;font-style:bolder;">Corpo</p>
+				</td>
+	<td>
+					<p sytle="color:blue;font-size:30px;font-style:bolder;">Categoria</p>
 				</td>
 
 			</tr>
@@ -40,6 +43,9 @@
 					</td>
 					<td style="margin-bottom:1em;font-size:10pt;color:green">
 						<xsl:value-of select="corpo" />
+					</td>
+<td style="margin-bottom:1em;font-size:10pt;color:green">
+						<xsl:value-of select="Categoria" />
 					</td>
 
 				</tr>
