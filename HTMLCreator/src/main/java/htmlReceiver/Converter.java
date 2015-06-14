@@ -10,15 +10,16 @@ import javax.xml.transform.stream.StreamSource;
 
 public class Converter {
 
-	public void convertXMLtoHTML() {
+	public static boolean convertXMLtoHTML() {
+		boolean convert = false;
 		// Input xml data file
-		String xmlInput = "src/main/resources/nomedoficheiroXML.xml";
+		String xmlInput = "noticiasoutput.xml";
 
 		// Input xsl (stylesheet) file
-		String xslInput = "src/main/resources/nomedoficehiroXSL.xsl";
+		String xslInput = "noticia.xsl";
 
 		// Output html file
-		String htmlOutput = "src/main/resources/nomedonovoficheiroHTML.html";
+		String htmlOutput = "noticiasoutputHTML.html";
 
 		// Set the property to use xalan processor
 		System.setProperty("javax.xml.transform.TransformerFactory",
@@ -41,9 +42,11 @@ public class Converter {
 			StreamSource xmlSource = new StreamSource(xml);
 			StreamResult result = new StreamResult(os);
 			transformer.transform(xmlSource, result);
+			convert = true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			convert = false;
 		}
-
+		return convert;
 	}
 }
