@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 
 import classes.Noticia;
 import classes.Noticias;
+<<<<<<< HEAD
 
 public class Crawler {
 
@@ -28,9 +29,24 @@ public class Crawler {
 
 		Noticias noticias = new Noticias();
 		Noticia noticia = null;
+=======
 
-		final String urlGeral = "http://edition.cnn.com";
+public class Crawler {
 
+	private int cont1=0,cont2=0;//RETIRAR
+
+	private Document paginaPrincipal = null;	
+	private Document paginaInterior = null;
+	private Element link = null;
+
+	private Noticias noticias = new Noticias();
+	private Noticia noticia = null;
+>>>>>>> origin/master
+
+	private final String urlGeral = "http://edition.cnn.com";
+	private final String ficheiroOutput = "newsOutput.xml";
+
+<<<<<<< HEAD
 		String urlPagina = null;
 		String categoria = null;
 		String data = null;
@@ -45,6 +61,29 @@ public class Crawler {
 		String url = "";
 
 		// descobre LINKS
+=======
+	private String urlPagina = null;
+	private String categoria = null;
+	private String data = null;
+	private String autor = null;
+	private String titulo = null;
+	private String descricao = null;
+	private String corpo = null;
+	private String imagem = null;
+	private String video = null;
+
+	private ArrayList<String> urlsAlvo = new ArrayList<String>();
+	private String url = "";
+
+	public String executaCrawler() {
+		descobreLinks();
+		pesquisaPaginas();
+		marshallNoticia();
+		return ficheiroOutput;
+	}
+
+	private void descobreLinks() {
+>>>>>>> origin/master
 		try {
 			paginaPrincipal = Jsoup.connect(urlGeral).get();
 		} catch (IOException e) {
@@ -67,13 +106,22 @@ public class Crawler {
 				url = link.attr("href");
 				if (!urlsAlvo.contains(url)) {
 					urlsAlvo.add(url);
+<<<<<<< HEAD
 					System.out.println(url); // RETIRAR
 					cont1++; // RETIRAR
+=======
+					cont1++;  //RETIRAR
+>>>>>>> origin/master
 				}
 			}
 		}
+	}
 
+<<<<<<< HEAD
 		// percorre LINKS
+=======
+	private void pesquisaPaginas() {
+>>>>>>> origin/master
 		for (String urlAlvo : urlsAlvo) {
 			try {
 				paginaInterior = Jsoup.connect(urlGeral + urlAlvo).get();
@@ -109,11 +157,15 @@ public class Crawler {
 				case "url":
 					if (value.endsWith(".cnn")) {
 						video = value;
+<<<<<<< HEAD
 						cont3++;// RETIRAR
+=======
+>>>>>>> origin/master
 					}
 					break;
 				}
 			}
+<<<<<<< HEAD
 			noticia.setCategoria(categoria);
 			noticia.setDescricao(descricao);
 			noticia.setUrlPagina(urlPagina);
@@ -142,4 +194,36 @@ public class Crawler {
 		}
 		return XMLtoString.convertXMLFileToString("newsOutput.xml");
 	}
+=======
+			constroiNoticia();
+		}
+	}
+
+	private void constroiNoticia() {
+		noticia.setCategoria(categoria);
+		noticia.setDescricao(descricao);
+		noticia.setUrlPagina(urlPagina);
+		noticia.setTitulo(titulo);
+		noticia.setData(data);
+		noticia.setAutor(autor);
+		noticia.setCorpo(corpo);
+		noticia.setImagem(imagem);
+		noticia.setVideo(video);//ÀS VEZES FALHA
+		noticias.getNoticia().add(noticia);
+	}
+		
+	private void marshallNoticia() {
+		System.out.println("Total links -> " + cont1);//RETIRAR
+		System.out.println("Total noticias -> " + cont2);//RETIRAR
+		new JAXBHandler();
+		try {
+			JAXBHandler.marshal(noticias, new File (ficheiroOutput));
+		} catch (IOException | JAXBException e) {
+			System.out.println(e.getMessage());
+		}	
+	}
+		
+
+
+>>>>>>> origin/master
 }

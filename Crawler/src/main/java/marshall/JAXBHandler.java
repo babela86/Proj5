@@ -15,25 +15,29 @@ import classes.Noticia;
 import classes.Noticias;
 
 public class JAXBHandler {
+<<<<<<< HEAD
 
 	// Export
+=======
+>>>>>>> origin/master
 
-	public static void marshal(Noticias news, File selectedFile)
-			throws IOException, JAXBException {
+	public static void marshal(Noticias news, File selectedFile) throws IOException, JAXBException {
 		JAXBContext context;
 		BufferedWriter writer = null;
 		writer = new BufferedWriter(new FileWriter(selectedFile));
 		context = JAXBContext.newInstance(Noticias.class);
 		Marshaller m = context.createMarshaller();
 		m.setProperty(Marshaller.JAXB_ENCODING, "US-ASCII");
-		m.setProperty("com.sun.xml.internal.bind.xmlHeaders",
-				"<?xml-stylesheet type=\"text/xsl\" href=\"noticia.xsl\"?>\n\n");
+		m.setProperty("com.sun.xml.internal.bind.xmlHeaders", "<?xml-stylesheet type=\"text/xsl\" href=\"noticia.xsl\"?>\n\n");
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		m.marshal(news, writer);
 		writer.close();
 	}
 
+<<<<<<< HEAD
 	// Import
+=======
+>>>>>>> origin/master
 	public static List<Noticia> unmarshal(File importFile) throws JAXBException {
 		Noticias news = new Noticias();
 		JAXBContext context = JAXBContext.newInstance(Noticias.class);

@@ -13,6 +13,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import webcrawler.Crawler;
+<<<<<<< HEAD
+=======
+import auxiliar.XMLtoString;
+>>>>>>> origin/master
 
 public class Sender {
 
@@ -20,6 +24,7 @@ public class Sender {
 
 		// final String message= criar o ficheiro do crawler , ja em string
 		// chamar o XMLtoString apartir do crawler
+<<<<<<< HEAD
 		String msg = Crawler.crawler();
 
 		Properties propriedades = new Properties();
@@ -48,6 +53,27 @@ public class Sender {
 		// Session session = jmsConnection.createSession(false,
 		// Session.AUTO_ACKNOWLEDGE);
 
+=======
+		String ficheiro = new Crawler().executaCrawler();
+		new XMLtoString();
+		String msg = XMLtoString.convertXMLFileToString(ficheiro);
+		System.out.println(msg);
+		
+		
+		
+		Properties propriedades = new Properties();
+		propriedades.setProperty("java.naming.factory.initial",	"org.jboss.naming.remote.client.InitialContextFactory");
+		propriedades.setProperty("java.naming.provider.url", "http-remoting://127.0.0.1:9001");
+		propriedades.setProperty("java.naming.security.principal", "joao");
+		propriedades.setProperty("java.naming.security.credentials", "br1o+sa*");
+
+		InitialContext ic = new InitialContext(propriedades);
+
+		ConnectionFactory cf = (ConnectionFactory) ic.lookup("jms/RemoteConnectionFactory");
+		Topic topic = (Topic) ic.lookup("jms/queue/PlayQueue");
+		Connection jmsConnection = cf.createConnection("joao", "br1o+sa*");
+		Session session = jmsConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+>>>>>>> origin/master
 		MessageProducer sender = session.createProducer(topic);
 		TextMessage mensagemEnviar = session.createTextMessage(msg);
 		sender.send(mensagemEnviar);
