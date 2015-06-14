@@ -1,4 +1,4 @@
-package webcrawler;
+package webc;
 
 import java.io.File;
 import java.io.FileInputStream;
