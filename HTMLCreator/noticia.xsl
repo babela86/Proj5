@@ -15,11 +15,11 @@
 							</tr>
 							<tr>
 								<td style="font-style:italic">
-									Autor:
+									<b> Autor:</b>
 									<xsl:value-of select="autor" />
 								</td>
 								<td>
-									Data:
+									<b>Data:</b>
 									<xsl:value-of select="data" />
 								</td>
 							</tr>
@@ -28,20 +28,28 @@
 									<xsl:value-of select="descricao" />
 								</td>
 								<td>
-									Categoria:
+									<b>Categoria:</b>
 									<xsl:value-of select="categoria" />
 								</td>
 							</tr>
 							<tr>
-								<td>
+								<td colspan="2">
 									<xsl:element name="img">
 										<xsl:attribute name="src">
 										<xsl:value-of select="imagem" />
 									</xsl:attribute>
 									</xsl:element>
 								</td>
-								<td>
-									<xsl:value-of select="video" />
+							</tr>
+							<tr>
+								<td colspan="2">
+									<b>Video: </b>
+									<a>
+										<xsl:attribute name="href">
+											<xsl:value-of select="video" />
+										</xsl:attribute>
+										<xsl:value-of select="video" />
+									</a>
 								</td>
 							</tr>
 							<tr>
