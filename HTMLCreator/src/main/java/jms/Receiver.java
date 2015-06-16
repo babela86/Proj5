@@ -47,18 +47,22 @@ public class Receiver implements MessageListener {
 
 	public void onMessage(Message msg) {
 		try {
-			System.out.println("Generating XML.."); //APAGAR
 			String msgToXML = ((TextMessage)msg).getText();
 			Document file = StringToXML.stringToXML(msgToXML);
 			Transformer transformer  = TransformerFactory.newInstance().newTransformer();
-			Result output = new StreamResult(new File("src//main//resources//noticiasoutput.xml"));
+			File ficheiro = new File("src//main//resources//noticiasoutput.xml");
+			Result output = new StreamResult(ficheiro);
+			try {
+				XMLvalidation.validateXMLSchema(ficheiro.getPath());
+			} catch (Exception e) {
+				log.severe("A validação do XML falhou - > " + e.getMessage());
+			}
 			Converter.convertXMLtoHTML();
 			Source input = new DOMSource(file);
 			transformer.transform(input, output);
 			log.info("Foi recebida uma mensagem com sucesso.");
 			System.out.println("A recepção de mensagens está activa");
-			System.out.println("### Pressione enter para sair ###");
-			Thread.sleep(1000);
+			System.out.println("#### Pressione enter para sair ####");
 		} catch (Exception e) {
 			log.severe("A recepção da mensagem falhou -> " + e.getMessage());
 		}

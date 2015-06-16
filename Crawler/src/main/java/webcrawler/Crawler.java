@@ -61,7 +61,7 @@ public class Crawler {
 			if ((link.attr("href").contains("/asia/")
 					|| link.attr("href").contains("/us/")
 					|| link.attr("href").contains("/china/")
-					|| link.attr("href").contains("/world/")// RETIRAR ??
+					|| link.attr("href").contains("/world/")
 					|| link.attr("href").contains("/europe/")
 					|| link.attr("href").contains("/middleeast/")
 					|| link.attr("href").contains("/africa/") || link.attr(

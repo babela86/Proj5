@@ -12,7 +12,7 @@ public class Converter {
 
 	public static void convertXMLtoHTML() {
 		String agora = String.valueOf(new java.util.Date().getTime());
-		String xmlInput = "noticiasoutput.xml";
+		String xmlInput = "src//main//resources//noticiasoutput.xml";
 		String xslInput = "src//main//resources//noticia.xsl";
 		String htmlOutput = "src//main//resources//archive//noticiasoutputHTML"	+ agora + ".html";
 		System.setProperty("javax.xml.transform.TransformerFactory", "org.apache.xalan.processor.TransformerFactoryImpl");

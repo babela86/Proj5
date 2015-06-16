@@ -1,0 +1,54 @@
+Balanço de notícias (por categoria): 
+africa -> 1 notícia(s)
+world -> 1 notícia(s)
+asia -> 2 notícia(s)
+middleeast -> 3 notícia(s)
+europe -> 2 notícia(s)
+us -> 3 notícia(s)
+************************************
+
+Balanço de notícias (por categoria): 
+africa -> 1 notícia(s)
+world -> 1 notícia(s)
+asia -> 2 notícia(s)
+middleeast -> 3 notícia(s)
+europe -> 2 notícia(s)
+us -> 3 notícia(s)
+************************************
+
+Balanço de notícias (por categoria): 
+
+africa -> 1 notícia(s)
+world -> 1 notícia(s)
+asia -> 2 notícia(s)
+middleeast -> 3 notícia(s)
+europe -> 2 notícia(s)
+us -> 3 notícia(s)
+
+
+************************************
+
+Balanço de notícias (por categoria): 
+
+africa -> 1 notícia(s)
+world -> 1 notícia(s)
+asia -> 2 notícia(s)
+middleeast -> 3 notícia(s)
+europe -> 2 notícia(s)
+us -> 3 notícia(s)
+
+
+************************************
+
+Balanço de notícias (por categoria): 
+
+africa -> 1 notícia(s)
+world -> 1 notícia(s)
+asia -> 2 notícia(s)
+middleeast -> 3 notícia(s)
+europe -> 2 notícia(s)
+us -> 3 notícia(s)
+
+
+************************************
+
