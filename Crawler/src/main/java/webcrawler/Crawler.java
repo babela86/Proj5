@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.xml.bind.JAXBException;
-
 import marshall.JAXBHandler;
 
 import org.jsoup.Jsoup;
@@ -28,7 +26,7 @@ public class Crawler {
 	private Noticia noticia = null;
 
 	private final String urlGeral = "http://edition.cnn.com";
-	private final String ficheiroOutput = "newsOutput.xml";
+	private final String ficheiroOutput = "src//main//resources//noticiascrawler.xml";
 
 	private String urlPagina = null;
 	private String categoria = null;
@@ -144,12 +142,7 @@ public class Crawler {
 		System.out.println("Total links -> " + cont1);// RETIRAR
 		System.out.println("Total noticias -> " + cont2);// RETIRAR
 		new JAXBHandler();
-		try {
-			JAXBHandler.marshal(noticias, new File(ficheiroOutput));
-		} catch (IOException | JAXBException e) {
-			System.out.println(e.getMessage());
-		}
-
+		JAXBHandler.marshal(noticias, new File(ficheiroOutput));
 	}
 
 }
