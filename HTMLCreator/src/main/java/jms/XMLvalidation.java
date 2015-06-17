@@ -17,7 +17,7 @@ public class XMLvalidation {
 	private static final Logger log = Logger.getLogger(XMLvalidation.class.getName());
 
 	public static void validateXMLSchema(String xmlPath) throws SAXException, IOException {
-		String xsdPath ="src//main//resources//noticia.xsd";
+		String xsdPath ="..//src//main//resources//noticia.xsd";
 		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		Schema schema = factory.newSchema(new File(xsdPath));
 		Validator validator = schema.newValidator();

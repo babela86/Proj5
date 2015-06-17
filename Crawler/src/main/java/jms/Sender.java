@@ -32,7 +32,6 @@ public class Sender {
 			session.close();
 			jmsConnection.close();
 			log.info("Foi enviada uma mensagem com sucesso.");
-			System.out.println("Mensagem Enviada!"); //PARA APAGAR ///////////////////////
 		} catch (Exception e) {
 			log.severe("O envio de uma mensagem falhou -> " + e.getMessage());
 		}

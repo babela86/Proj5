@@ -3,6 +3,7 @@ package webcrawler;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import marshall.JAXBHandler;
 
@@ -16,7 +17,7 @@ import classes.Noticias;
 
 public class Crawler {
 
-	private int cont1 = 0, cont2 = 0;// RETIRAR
+	private static final Logger log = Logger.getLogger(Crawler.class.getName());
 
 	private Document paginaPrincipal = null;
 	private Document paginaInterior = null;
@@ -26,7 +27,7 @@ public class Crawler {
 	private Noticia noticia = null;
 
 	private final String urlGeral = "http://edition.cnn.com";
-	private final String ficheiroOutput = "src//main//resources//noticiascrawler.xml";
+	private final String ficheiroOutput = "..//src//main//resources//noticiascrawler.xml";
 
 	private String urlPagina = null;
 	private String categoria = null;
@@ -71,9 +72,6 @@ public class Crawler {
 				url = link.attr("href");
 				if (!urlsAlvo.contains(url)) {
 					urlsAlvo.add(url);
-
-					cont1++; // RETIRAR
-
 				}
 			}
 		}
@@ -84,11 +82,10 @@ public class Crawler {
 			try {
 				paginaInterior = Jsoup.connect(urlGeral + urlAlvo).get();
 			} catch (IOException e) {
-				System.out.println(e.getMessage());
+				log.severe("A conexão à página " + paginaInterior.toString() + " falhou -> " + e.getMessage());
 			}
 			urlPagina = urlGeral + urlAlvo;
-			corpo = paginaInterior.getElementsByClass("zn-body__paragraph")
-					.text();
+			corpo = paginaInterior.getElementsByClass("zn-body__paragraph").text();
 			for (Element meta : paginaInterior.select("meta")) {
 				String key = meta.attr("itemprop");
 				String value = meta.attr("content");
@@ -115,12 +112,10 @@ public class Crawler {
 				case "url":
 					if (value.endsWith(".cnn")) {
 						video = value;
-
 					}
 					break;
 				}
 			}
-
 			constroiNoticia();
 		}
 	}
@@ -134,13 +129,11 @@ public class Crawler {
 		noticia.setAutor(autor);
 		noticia.setCorpo(corpo);
 		noticia.setImagem(imagem);
-		noticia.setVideo(video);// ÀS VEZES FALHA
+		noticia.setVideo(video);
 		noticias.getNoticia().add(noticia);
 	}
 
 	private void marshallNoticia() {
-		System.out.println("Total links -> " + cont1);// RETIRAR
-		System.out.println("Total noticias -> " + cont2);// RETIRAR
 		new JAXBHandler();
 		JAXBHandler.marshal(noticias, new File(ficheiroOutput));
 	}

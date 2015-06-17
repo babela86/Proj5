@@ -19,7 +19,7 @@ public class XMLtoString {
 	public static String convertXMLFileToString(String fileName) {
 		try {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-			InputStream inputStream = new FileInputStream(new File(fileName));
+			InputStream inputStream = new FileInputStream(new File(XMLtoString.class.getResource(fileName).getFile()));
 			org.w3c.dom.Document doc = documentBuilderFactory.newDocumentBuilder().parse(inputStream);
 			StringWriter stw = new StringWriter();
 			Transformer serializer = TransformerFactory.newInstance().newTransformer();

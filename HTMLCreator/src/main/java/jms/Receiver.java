@@ -32,11 +32,9 @@ public class Receiver implements MessageListener {
 		try {
 			cf = InitialContext.doLookup("jms/RemoteConnectionFactory");
 			topic = InitialContext.doLookup("jms/topic/MyCNN");
-			System.out.println("Subscriber is now connected to topic"); //APAGAR
 			log.info("Conexão ao tópico realizada com sucesso.");
 		} catch (NamingException e) {
 			log.severe("A conexão ao tópico falhou -> " + e.getMessage());
-			System.out.println("Unable to connect to topic."); //APAGAR
 		}
 	}
 
@@ -50,7 +48,7 @@ public class Receiver implements MessageListener {
 			String msgToXML = ((TextMessage)msg).getText();
 			Document file = StringToXML.stringToXML(msgToXML);
 			Transformer transformer  = TransformerFactory.newInstance().newTransformer();
-			File ficheiro = new File("src//main//resources//noticiasoutput.xml");
+			File ficheiro = new File("..//src//main//resources//noticiasoutput.xml");
 			Result output = new StreamResult(ficheiro);
 			try {
 				XMLvalidation.validateXMLSchema(ficheiro.getPath());

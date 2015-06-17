@@ -39,6 +39,8 @@ public class Stats implements MessageListener {
 
 	private TopicConnectionFactory cf;
 	private Topic topic;
+	private int totalNoticias = 0;
+	private int noticiasValidas = 0;
 
 	public Stats () {
 		try {
@@ -73,7 +75,7 @@ public class Stats implements MessageListener {
 			String msgToXML = ((TextMessage)msg).getText();
 			Document file = StringToXML.stringToXML(msgToXML);
 			Transformer transformer  = TransformerFactory.newInstance().newTransformer();
-			File ficheiro = new File("src//main//resources//noticiasoutput.xml");
+			File ficheiro = new File("..//src//main//resources//noticiasoutput.xml");
 			Result output = new StreamResult(ficheiro);
 			try {
 				XMLvalidation.validateXMLSchema(ficheiro.getPath());
@@ -96,9 +98,10 @@ public class Stats implements MessageListener {
 		for (String s : stats.keySet()) {
 			resumoFile = resumoFile + s + " -> " + stats.get(s) + " notícia(s)\n";
 		}
-		resumoFile = resumoFile + "\n\n************************************\n\n";
+		resumoFile = resumoFile + "\n\nTotal de notícias pesquisadas: " + totalNoticias + "\nNotícias válidas (menos de 12 horas): " 
+		+ noticiasValidas + "\nNotícias antigas (mais de 12 horas): " + (totalNoticias-noticiasValidas) + "\n\n************************************\n\n";
 		try {
-			File statsFile = new File("src//main//resources//stats.txt");
+			File statsFile = new File("stats.txt");
 			if (!statsFile.exists()) {
 				statsFile.createNewFile();
 			}
@@ -114,7 +117,7 @@ public class Stats implements MessageListener {
 
 	private Map <String, Integer> doStats() {
 		try {
-			File noticias = new File("src//main//resources//noticiasoutput.xml");
+			File noticias = new File("..//src//main//resources//noticiasoutput.xml");
 			DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = dBuilder.parse(noticias);
 			String dataHora=null;
@@ -122,6 +125,8 @@ public class Stats implements MessageListener {
 			String hora=null;
 			String categ=null;
 			NodeList lista = doc.getElementsByTagName("noticia");
+			totalNoticias = lista.getLength();
+			noticiasValidas = 0;
 			NodeList lista2 = null;
 			HashMap <String , Integer> stats = new HashMap <String , Integer>();
 			for (int i=0; i<lista.getLength();i++) {
@@ -135,6 +140,7 @@ public class Stats implements MessageListener {
 							for (int h=0; h<lista2.getLength(); h++) {
 								if (lista2.item(h).getNodeName().equals("categoria")) {
 									categ = lista2.item(h).getTextContent();
+									noticiasValidas ++;
 									if (stats.containsKey(categ)) {
 										stats.put(categ, stats.get(categ) + 1);
 									} else {

@@ -4,7 +4,12 @@
 	<xsl:template match="/">
 		<html>
 			<body>
-				<h2>Noticias</h2>
+			
+				<div style="margin-top:20px;text-align:center">
+				
+					<h2>Resultado da pesquisa de noticias</h2>
+					<h3>Site pesquisado: CNN (<a href="http://cnn.com">http://cnn.com</a>)</h3>
+				</div>
 				<xsl:for-each select="noticias/noticia">
 					<div style="margin:20px">
 						<table border="3" style="text-align:center">
@@ -15,11 +20,11 @@
 							</tr>
 							<tr>
 								<td style="font-style:italic">
-									Autor:
+									<b> Autor: </b>
 									<xsl:value-of select="autor" />
 								</td>
 								<td>
-									Data:
+									<b>Data: </b>
 									<xsl:value-of select="data" />
 								</td>
 							</tr>
@@ -28,20 +33,28 @@
 									<xsl:value-of select="descricao" />
 								</td>
 								<td>
-									Categoria:
+									<b>Categoria: </b>
 									<xsl:value-of select="categoria" />
 								</td>
 							</tr>
 							<tr>
-								<td>
+								<td colspan="2">
 									<xsl:element name="img">
 										<xsl:attribute name="src">
 										<xsl:value-of select="imagem" />
 									</xsl:attribute>
 									</xsl:element>
 								</td>
-								<td>
-									<xsl:value-of select="video" />
+							</tr>
+							<tr>
+								<td colspan="2">
+									<b>Vídeo: </b>
+									<a>
+										<xsl:attribute name="href">
+											<xsl:value-of select="video" />
+										</xsl:attribute>
+										<xsl:value-of select="video" />
+									</a>
 								</td>
 							</tr>
 							<tr>
@@ -51,6 +64,7 @@
 							</tr>
 							<tr>
 								<td colspan="2" style="font-style:bold">
+									<b>URL da página: </b>
 									<a>
 										<xsl:attribute name="href">
 											<xsl:value-of select="urlPagina" />
