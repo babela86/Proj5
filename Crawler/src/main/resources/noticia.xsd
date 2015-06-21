@@ -28,7 +28,7 @@
   <xs:element name="corpo" type="xs:string"/>
   <xs:element name="urlPagina" type="xs:anyURI"/>
   <xs:element name="descricao" type="xs:string"/>
-  <xs:element name="imagem" type="xs:anyURI"/>
-  <xs:element name="video" type="xs:anyURI"/>
+  <xs:element name="imagem" type="xs:anyURI" nillable="true"/>
+  <xs:element name="video" type="xs:anyURI" nillable="true"/>
   <xs:element name="categoria" type="xs:string"/>
 </xs:schema>

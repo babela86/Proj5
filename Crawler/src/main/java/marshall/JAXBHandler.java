@@ -18,7 +18,7 @@ public class JAXBHandler {
 
 	private static final Logger log = Logger.getLogger(JAXBHandler.class.getName());
 	
-	public static void marshal (Noticias news, File selectedFile) {
+	public static void marshal (Noticias news, File selectedFile) throws Exception {
 		JAXBContext context;
 		BufferedWriter writer = null;
 		try {
@@ -32,8 +32,8 @@ public class JAXBHandler {
 			log.info("O marshal do objecto " + news.toString() + " para o ficheiro " + selectedFile + " foi realizado com sucesso.");
 		} catch (Exception e) {
 			log.severe("O marshal do objecto " + news.toString() + " para o ficheiro " + selectedFile + " falhou -> " + e.getMessage());
+			throw e;
 		}
-		
 	}
 
 	public static List<Noticia> unmarshal(File importFile) throws JAXBException {

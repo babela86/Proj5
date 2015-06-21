@@ -27,7 +27,7 @@ public class Crawler {
 	private Noticia noticia = null;
 
 	private final String urlGeral = "http://edition.cnn.com";
-	private final String ficheiroOutput = "..//src//main//resources//noticiascrawler.xml";
+	private final String ficheiroOutput = "noticiascrawler.xml";
 
 	private String urlPagina = null;
 	private String categoria = null;
@@ -42,47 +42,64 @@ public class Crawler {
 	private ArrayList<String> urlsAlvo = new ArrayList<String>();
 	private String url = "";
 
-	public String executaCrawler() {
-		descobreLinks();
-		pesquisaPaginas();
-		marshallNoticia();
+	public String executaCrawler() throws Exception {
+		boolean paginasOk = false;
+		boolean marshalOk=false;
+		
+		if (descobreLinks()) {
+			paginasOk = pesquisaPaginas();
+		} else {
+			return null;
+		}
+		if (paginasOk) {
+			marshalOk = marshallNoticia();
+		} else {
+			return null;
+		}
+		if (marshalOk==false) {
+			return null;
+		}
 		return ficheiroOutput;
 	}
 
-	private void descobreLinks() {
+	private boolean descobreLinks()  {
 		try {
 			paginaPrincipal = Jsoup.connect(urlGeral).get();
-		} catch (IOException e) {
-			e.getMessage();
-		}
-		Elements urlsElement = paginaPrincipal
-				.getElementsByClass("cd__headline");
-		for (Element urlElement : urlsElement) {
-			link = urlElement.getElementsByTag("a").first();
-			if ((link.attr("href").contains("/asia/")
-					|| link.attr("href").contains("/us/")
-					|| link.attr("href").contains("/china/")
-					|| link.attr("href").contains("/world/")
-					|| link.attr("href").contains("/europe/")
-					|| link.attr("href").contains("/middleeast/")
-					|| link.attr("href").contains("/africa/") || link.attr(
-							"href").contains("/americas/"))
-							&& !link.attr("href").contains("/videos/")
-							&& !link.attr("href").contains("/gallery/")) {
-				url = link.attr("href");
-				if (!urlsAlvo.contains(url)) {
-					urlsAlvo.add(url);
+			log.info("Conexão à página " + urlGeral +  " realizada com sucesso");
+			Elements urlsElement = paginaPrincipal.getElementsByClass("cd__headline");
+			for (Element urlElement : urlsElement) {
+				link = urlElement.getElementsByTag("a").first();
+				if ((link.attr("href").contains("/asia/")
+						|| link.attr("href").contains("/us/")
+						|| link.attr("href").contains("/china/")
+						|| link.attr("href").contains("/world/")
+						|| link.attr("href").contains("/europe/")
+						|| link.attr("href").contains("/middleeast/")
+						|| link.attr("href").contains("/africa/") 
+						|| link.attr("href").contains("/americas/"))
+						&& !link.attr("href").contains("/videos/")
+						&& !link.attr("href").contains("/gallery/")) {
+					url = link.attr("href");
+					if (!urlsAlvo.contains(url)) {
+						urlsAlvo.add(url);
+					}
 				}
 			}
+			return true;
+		} catch (Exception e) {
+			log.severe("A conexao para a pagina falhou " + urlGeral + " -> " + e.getMessage());
+			return false;
 		}
 	}
 
-	private void pesquisaPaginas() {
+	private boolean pesquisaPaginas() {
+		boolean ok = false;
 		for (String urlAlvo : urlsAlvo) {
 			try {
 				paginaInterior = Jsoup.connect(urlGeral + urlAlvo).get();
+				log.info("Conexao para pagina " + urlGeral + urlAlvo + " realizada com sucesso");
 			} catch (IOException e) {
-				log.severe("A conexão à página " + paginaInterior.toString() + " falhou -> " + e.getMessage());
+				log.severe("A conexao para a pagina falhou " + urlGeral + urlAlvo + " -> " + e.getMessage());
 			}
 			urlPagina = urlGeral + urlAlvo;
 			corpo = paginaInterior.getElementsByClass("zn-body__paragraph").text();
@@ -115,9 +132,13 @@ public class Crawler {
 					}
 					break;
 				}
+				ok = true;
 			}
-			constroiNoticia();
+			if (ok) {
+				constroiNoticia();
+			}
 		}
+		return ok;
 	}
 
 	private void constroiNoticia() {
@@ -125,7 +146,7 @@ public class Crawler {
 		noticia.setDescricao(descricao);
 		noticia.setUrlPagina(urlPagina);
 		noticia.setTitulo(titulo);
-		noticia.setData(data);
+		noticia.setData(formataData(data));
 		noticia.setAutor(autor);
 		noticia.setCorpo(corpo);
 		noticia.setImagem(imagem);
@@ -133,9 +154,19 @@ public class Crawler {
 		noticias.getNoticia().add(noticia);
 	}
 
-	private void marshallNoticia() {
-		new JAXBHandler();
-		JAXBHandler.marshal(noticias, new File(ficheiroOutput));
+	private String formataData (String dataHora) {
+		String dataHoraT = dataHora.substring(0,10) + " " + dataHora.substring(11,19);
+		return dataHoraT;
 	}
 
+	private boolean marshallNoticia()  {
+		new JAXBHandler();
+		try {
+			JAXBHandler.marshal(noticias, new File(ficheiroOutput));
+			return true;
+		} catch (Exception e) {
+			e.getMessage();
+			return false;
+		}
+	}
 }
